@@ -21,13 +21,25 @@ const googleTagManagerPluginConfig = {
   },
 };
 
+const manifestPluginConfig = {
+  resolve: `gatsby-plugin-manifest`,
+  options: {
+    name: "Andrea Francesco Pavia's Portfolio",
+    short_name: "Andrea Francesco Pavia's Portfolio",
+    start_url: "/",
+    background_color: "#d72638",
+    icon: "src/images/icon.png",
+    crossOrigin: `use-credentials`,
+  },
+};
+
 module.exports = {
   siteMetadata: {
-    title: `Portfolio`,
-    siteUrl: `https://www.andreafrancescopavia.it/`
+    
   },
   plugins: [
     "gatsby-plugin-sass",
+    manifestPluginConfig
     // Uncomment to enable analytics
     // googleAnalyticsPluginConfig,
     // googleTagManagerPluginConfig
