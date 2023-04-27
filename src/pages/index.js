@@ -1,16 +1,15 @@
-import * as React from 'react'
-import Welcome from '../components/welcome/Welcome';
+import * as React from "react";
 
-import '../styles/global.scss'
+import "../styles/global.scss";
 
 const IndexPage = () => {
-    return (
-        <main>
-            <Welcome />
-        </main>
-    )
-}
+  return (
+    <main>
+      <div>ciao</div>
+    </main>
+  );
+};
 
-export default IndexPage
+export default IndexPage;
 
-export const Head = () => <title>Home Page</title>
+export const Head = () => <title>Home Page</title>;

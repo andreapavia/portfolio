@@ -1,27 +1,57 @@
 {
-  "name": "test-gatsby",
-  "version": "1.0.0",
+  "name": "@andreapavia/portfolio",
   "private": true,
-  "description": "test-gatsby",
-  "author": "Andrea Pavia",
+  "description": "my own portfolio/playground for frontend developement",
+  "version": "0.1.0",
+  "author": "Andrea Pavia <a.pavia95@gmail.com>",
+  "dependencies": {
+    "gatsby": "^5.4.2",
+    "gatsby-omni-font-loader": "^2.0.2",
+    "gatsby-plugin-eslint": "^4.0.3",
+    "gatsby-plugin-image": "^3.4.0",
+    "gatsby-plugin-layout": "^4.4.0",
+    "gatsby-plugin-manifest": "^5.4.0",
+    "gatsby-plugin-page-transitions": "^1.0.8",
+    "gatsby-plugin-sass": "^6.4.0",
+    "gatsby-plugin-sharp": "^5.4.0",
+    "gatsby-source-filesystem": "^5.4.0",
+    "gatsby-transformer-sharp": "^5.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "sass": "^1.57.1"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "eslint": "^8.32.0",
+    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-webpack-plugin": "^3.2.0",
+    "prettier": "^2.8.1",
+    "stylelint": "^14.16.1",
+    "stylelint-config-prettier-scss": "^0.0.1",
+    "stylelint-config-standard": "^29.0.0",
+    "stylelint-config-standard-scss": "^6.1.0"
+  },
   "keywords": [
     "gatsby"
   ],
+  "license": "0BSD",
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
     "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
+    "start": "gatsby develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "lint": "eslint --ext js,jsx ."
   },
-  "dependencies": {
-    "gatsby": "^4.24.4",
-    "gatsby-plugin-google-gtag": "^4.24.0",
-    "gatsby-plugin-google-tagmanager": "^4.24.0",
-    "gatsby-plugin-manifest": "^4.24.0",
-    "gatsby-plugin-sass": "^5.24.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "sass": "^1.55.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
