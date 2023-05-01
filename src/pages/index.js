@@ -1,13 +1,13 @@
-import * as React from "react";
-
-import "../styles/global.scss";
+import React from 'react';
+import { Hero } from '../components/hero/Hero';
+import '../styles/global.scss';
 
 const IndexPage = () => {
-  return (
-    <main>
-      <div>ciao</div>
-    </main>
-  );
+    return (
+        <main>
+            <Hero />
+        </main>
+    );
 };
 
 export default IndexPage;

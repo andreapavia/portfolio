@@ -1,5 +1,18 @@
-@import "_reset.scss";
+@use './variables';
+@use '_reset.scss';
+
+* {
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #D72638;
+    background-color: variables.$background-1;
+    color: variables.$foreground-1;
+}
+
+main {
+    max-width: variables.$max-content-width;
+    margin: 0 auto;
+    font-family: variables.$font-main;
+    font-size: variables.$font-size-main;
 }
