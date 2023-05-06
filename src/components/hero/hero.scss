@@ -11,6 +11,7 @@
         top: 40px;
         left: 0;
         right: 0;
+        z-index: 99;
 
         & > div {
             max-width: variables.$max-content-width;
@@ -28,6 +29,12 @@
             cursor: pointer;
             user-select: none;
         }
+
+        &--left {
+            & > div {
+                justify-content: flex-start;
+            }
+        }
     }
 
     &__sidebar {
@@ -42,8 +49,15 @@
         ul {
             display: flex;
 
-            li:not(:last-child) {
-                margin-right: 15%;
+            li {
+                &.hidden-element {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+
+                &:not(:last-child) {
+                    margin-right: 15%;
+                }
             }
         }
     }

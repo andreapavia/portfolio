@@ -5,6 +5,11 @@ import './hero.scss';
 export const Hero = () => {
     return (
         <section className="intro">
+            <div className="intro__fixed-menu intro__fixed-menu--left">
+                <div>
+                    <span>Andrea Pavia</span>
+                </div>
+            </div>
             <div className="intro__fixed-menu">
                 <div>
                     <button>whoami</button>
@@ -12,7 +17,7 @@ export const Hero = () => {
             </div>
             <sidebar className="intro__sidebar intro-sidebar">
                 <ul>
-                    <li>
+                    <li className="hidden-element" aria-hidden="true">
                         <h4>Andrea Pavia</h4>
                     </li>
                     <li>
