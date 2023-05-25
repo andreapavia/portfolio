@@ -15,7 +15,7 @@ export const Hero = () => {
                     <button>whoami</button>
                 </div>
             </div>
-            <sidebar className="intro__sidebar intro-sidebar">
+            <nav className="intro__sidebar intro-sidebar">
                 <ul>
                     <li className="hidden-element" aria-hidden="true">
                         <h4>Andrea Pavia</h4>
@@ -31,7 +31,7 @@ export const Hero = () => {
                         </h4>
                     </li>
                 </ul>
-            </sidebar>
+            </nav>
             <article className="intro__content content">
                 <div className="content__row">
                     <h1>Frontend Developer</h1>

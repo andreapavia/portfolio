@@ -3,9 +3,10 @@
 .brief-me {
     $text-spacing: 40;
 
-    position: absolute;
-    left: 30%;
+    // position: absolute;
+    // left: 30%;
     width: 60%;
+    margin-left: 25vw;
     top: variables.$section-spacing;
 
     display: flex;
