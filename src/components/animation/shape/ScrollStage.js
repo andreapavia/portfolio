@@ -272,6 +272,16 @@ export class ScrollStage {
         });
     };
 
+    moveBeyond = () => {
+        GSAP.to(this.camera.position, {
+            duration: 1.5,
+            x: 0,
+            y: 0,
+            z: -2,
+            ease: 'circ.inOut',
+        });
+    };
+
     init() {
         this.addCanvas();
         this.addCamera();

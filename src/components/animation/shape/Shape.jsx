@@ -19,7 +19,13 @@ export const Shape = () => {
                 >
                     sinistra
                 </button>
-                <button>sotto</button>
+                <button
+                    onClick={() => {
+                        scrollStage.moveBeyond();
+                    }}
+                >
+                    oltre
+                </button>
                 <button
                     onClick={() => {
                         scrollStage.zoomOut();
