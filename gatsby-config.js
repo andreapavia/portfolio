@@ -43,6 +43,7 @@ module.exports = {
         'gatsby-plugin-sass',
         'gatsby-plugin-layout',
         'gatsby-plugin-page-transitions',
+        `gatsby-plugin-glslify`,
         gatsbySourceFileSystem,
         gatsbyPluginEslint,
         manifestPluginConfig,

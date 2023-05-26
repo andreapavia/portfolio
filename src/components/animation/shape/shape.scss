@@ -1,0 +1,38 @@
+%top {
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+%fixed {
+    @extend %top;
+    position: fixed;
+}
+
+.shape {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+canvas.webgl {
+    @extend %fixed;
+
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.links {
+    position: fixed;
+    bottom: 10%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+
+    button {
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        font-size: 38px;
+        font-family: Helvetica, sans-serif;
+        letter-spacing: -1px;
+    }
+}
