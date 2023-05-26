@@ -82,11 +82,11 @@ export class ScrollStage {
             vertexShader,
             fragmentShader,
             uniforms: {
-                uFrequency: { value: 0 },
-                uAmplitude: { value: 0 },
-                uDensity: { value: 0 },
-                uStrength: { value: 0 },
-                uDeepPurple: { value: 0 },
+                uFrequency: { value: 1 },
+                uAmplitude: { value: 2 },
+                uDensity: { value: 1 },
+                uStrength: { value: 1 },
+                uDeepPurple: { value: 0.5 },
                 uOpacity: { value: 0.5 },
             },
         });
@@ -125,9 +125,9 @@ export class ScrollStage {
 
         if (this.mesh) {
             if (this.viewport.width < this.viewport.height) {
-                this.mesh.scale.set(0.75, 0.75, 0.75);
+                this.mesh.scale.set(0.5, 0.5, 0.5);
             } else {
-                this.mesh.scale.set(1, 1, 1);
+                this.mesh.scale.set(0.75, 0.75, 0.75);
             }
         }
 
@@ -138,12 +138,45 @@ export class ScrollStage {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     }
 
+    getAngle = (x1, y1, x2, y2) => {
+        var distY = Math.abs(y2 - y1); //opposite
+        var distX = Math.abs(x2 - x1); //adjacent
+        var dist = Math.sqrt(distY * distY + distX * distX); //hypotenuse,
+        //don't know if there is a built in JS function to do the square of a number
+        var val = distY / dist;
+        var aSine = Math.asin(val);
+        return aSine; //return angle in degrees
+    };
+
     onMouseMove(event) {
         // play with it!
         // enable / disable / change x, y, multiplier …
+        const center = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+        };
 
-        this.mouse.x = (event.clientX / this.viewport.width).toFixed(2) * 2;
-        this.mouse.y = (event.clientY / this.viewport.height).toFixed(2) * 2;
+        const distanceFromCenter = {
+            x:
+                (
+                    Math.abs(event.clientX - center.x) / this.viewport.width
+                ).toFixed(2) * 2,
+            y:
+                (
+                    Math.abs(event.clientY - center.y) / this.viewport.height
+                ).toFixed(2) * 2,
+        };
+
+        const angleDeg = (
+            (Math.atan2(center.y - event.clientY, center.x - event.clientX) *
+                180) /
+            Math.PI /
+            100
+        ).toFixed(2);
+        console.log(angleDeg);
+
+        this.mouse.x = (event.clientX / this.viewport.width).toFixed(2);
+        this.mouse.y = (event.clientY / this.viewport.height).toFixed(2);
 
         // GSAP.to(this.mesh.material.uniforms.uFrequency, {
         //     value: this.mouse.y,
@@ -151,18 +184,36 @@ export class ScrollStage {
         // GSAP.to(this.mesh.material.uniforms.uAmplitude, {
         //     value: this.mouse.x,
         // });
-        GSAP.to(this.mesh.material.uniforms.uDensity, { value: this.mouse.y });
-        GSAP.to(this.mesh.material.uniforms.uStrength, { value: this.mouse.y });
+        GSAP.to(this.mesh.material.uniforms.uDensity, {
+            value: angleDeg,
+        });
+        GSAP.to(this.mesh.material.uniforms.uStrength, {
+            value: distanceFromCenter.y,
+        });
         // GSAP.to(this.mesh.material.uniforms.uDeepPurple, {
         //     value: this.mouse.x,
         // });
         // GSAP.to(this.mesh.material.uniforms.uOpacity, { value: this.mouse.y });
     }
 
+    randomIntFromInterval = (min, max) => {
+        // min and max included
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+
     /**
      * LOOP
      */
     update() {
+        const elapsedTime = this.clock.getElapsedTime();
+        if (this.mesh) {
+            this.mesh.rotation.y = elapsedTime * 0.15;
+
+            GSAP.to(this.mesh.material.uniforms.uDensity, {
+                value: this.randomIntFromInterval(10, 12) / 10,
+            });
+        }
+
         this.render();
 
         window.requestAnimationFrame(this.update);
@@ -185,14 +236,6 @@ export class ScrollStage {
     };
 
     zoomIn = () => {
-        console.log('zoom in');
-        // const cube = this.mesh;
-        // const coords = { x: 0, y: 0, z: 5 };
-        // new TWEEN.Tween(coords)
-        //     .to({ x: 0, y: 0, z: 1 })
-        //     .onUpdate(() => this.camera.position.set(0, 0, 1))
-        //     .start();
-
         GSAP.to(this.camera.position, {
             duration: 1,
             x: 0,
@@ -204,7 +247,7 @@ export class ScrollStage {
     moveLeft = () => {
         GSAP.to(this.camera.position, {
             duration: 1.5,
-            x: 1,
+            x: 2,
             y: 0,
             z: 2.5,
         });
@@ -213,14 +256,9 @@ export class ScrollStage {
     init() {
         this.addCanvas();
         this.addCamera();
-        this.addEventListeners();
+        // this.addEventListeners();
         this.onResize();
         this.update();
         this.addMesh();
-
-        // setTimeout(() => {
-        //     this.camera.position.set(0, 0, 5);
-        //     console.log('camera re set');
-        // }, 2000);
     }
 }
