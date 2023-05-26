@@ -69,11 +69,16 @@ export class ScrollStage {
 
         this.update = this.update.bind(this);
 
+        this.wave = {
+            mode: 'up',
+            value: 12,
+        };
+
         this.init();
     }
 
     addMesh() {
-        this.geometry = new THREE.IcosahedronGeometry(1, 64);
+        this.geometry = new THREE.IcosahedronGeometry(1, 8);
 
         this.material = new THREE.ShaderMaterial({
             wireframe: true,
@@ -83,15 +88,17 @@ export class ScrollStage {
             fragmentShader,
             uniforms: {
                 uFrequency: { value: 1 },
-                uAmplitude: { value: 2 },
+                uAmplitude: { value: 3 },
                 uDensity: { value: 1 },
                 uStrength: { value: 1 },
-                uDeepPurple: { value: 0.5 },
+                uDeepPurple: { value: 0 },
                 uOpacity: { value: 0.5 },
             },
         });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
+
+        this.mesh.scale.set(0.7, 0.7, 0.7);
 
         this.scene.add(this.mesh);
     }
@@ -123,13 +130,13 @@ export class ScrollStage {
             height: window.innerHeight,
         };
 
-        if (this.mesh) {
-            if (this.viewport.width < this.viewport.height) {
-                this.mesh.scale.set(0.5, 0.5, 0.5);
-            } else {
-                this.mesh.scale.set(0.75, 0.75, 0.75);
-            }
-        }
+        // if (this.mesh) {
+        //     if (this.viewport.width < this.viewport.height) {
+        //         this.mesh.scale.set(0.5, 0.5, 0.5);
+        //     } else {
+        //         this.mesh.scale.set(0.75, 0.75, 0.75);
+        //     }
+        // }
 
         this.camera.aspect = this.viewport.width / this.viewport.height;
         this.camera.updateProjectionMatrix();
@@ -206,11 +213,23 @@ export class ScrollStage {
      */
     update() {
         const elapsedTime = this.clock.getElapsedTime();
+
+        if (this.wave.value < 14 && this.wave.mode === 'up') {
+            this.wave.value = this.wave.value + 0.005;
+        } else if (this.wave.value > 12 && this.wave.mode === 'down') {
+            this.wave.value = this.wave.value - 0.005;
+        } else {
+            this.wave.mode = this.wave.mode === 'up' ? 'down' : 'up';
+        }
+
         if (this.mesh) {
             this.mesh.rotation.y = elapsedTime * 0.15;
 
             GSAP.to(this.mesh.material.uniforms.uDensity, {
-                value: this.randomIntFromInterval(10, 12) / 10,
+                value: this.wave.value / 10,
+            });
+            GSAP.to(this.mesh.material.uniforms.uAmplitude, {
+                value: this.wave.value / 10,
             });
         }
 
