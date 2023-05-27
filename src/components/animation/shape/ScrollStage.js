@@ -69,16 +69,11 @@ export class ScrollStage {
 
         this.update = this.update.bind(this);
 
-        this.wave = {
-            mode: 'up',
-            value: 12,
-        };
-
         this.init();
     }
 
     addMesh() {
-        this.geometry = new THREE.IcosahedronGeometry(1, 8);
+        this.geometry = new THREE.IcosahedronGeometry(1, 32);
 
         this.material = new THREE.ShaderMaterial({
             wireframe: true,
@@ -95,12 +90,30 @@ export class ScrollStage {
                 uOpacity: { value: 0.5 },
             },
         });
+        this.secondMaterial = new THREE.ShaderMaterial({
+            wireframe: true,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            vertexShader,
+            fragmentShader,
+            uniforms: {
+                uFrequency: { value: 1 },
+                uAmplitude: { value: 3 },
+                uDensity: { value: 1 },
+                uStrength: { value: 1 },
+                uDeepPurple: { value: 0.5 },
+                uOpacity: { value: 0.5 },
+            },
+        });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
+        this.secondMesh = new THREE.Mesh(this.geometry, this.secondMaterial);
 
         this.mesh.scale.set(0.7, 0.7, 0.7);
+        this.secondMesh.scale.set(0.7, 0.7, 0.7);
 
         this.scene.add(this.mesh);
+        this.scene.add(this.secondMesh);
     }
 
     /**
@@ -121,7 +134,7 @@ export class ScrollStage {
      */
     addEventListeners() {
         window.addEventListener('resize', this.onResize.bind(this));
-        window.addEventListener('mousemove', this.onMouseMove.bind(this));
+        // window.addEventListener('mousemove', this.onMouseMove.bind(this));
     }
 
     onResize() {
@@ -155,56 +168,29 @@ export class ScrollStage {
         return aSine; //return angle in degrees
     };
 
-    onMouseMove(event) {
-        // play with it!
-        // enable / disable / change x, y, multiplier …
-        const center = {
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2,
-        };
+    // onMouseMove(event) {
+    //     this.mouse.x = (event.clientX / this.viewport.width).toFixed(2);
+    //     this.mouse.y = (event.clientY / this.viewport.height).toFixed(2);
 
-        const distanceFromCenter = {
-            x:
-                (
-                    Math.abs(event.clientX - center.x) / this.viewport.width
-                ).toFixed(2) * 2,
-            y:
-                (
-                    Math.abs(event.clientY - center.y) / this.viewport.height
-                ).toFixed(2) * 2,
-        };
-
-        const angleDeg = (
-            (Math.atan2(center.y - event.clientY, center.x - event.clientX) *
-                180) /
-            Math.PI /
-            100
-        ).toFixed(2);
-        console.log(angleDeg);
-
-        this.mouse.x = (event.clientX / this.viewport.width).toFixed(2);
-        this.mouse.y = (event.clientY / this.viewport.height).toFixed(2);
-
-        // GSAP.to(this.mesh.material.uniforms.uFrequency, {
-        //     value: this.mouse.y,
-        // });
-        // GSAP.to(this.mesh.material.uniforms.uAmplitude, {
-        //     value: this.mouse.x,
-        // });
-        GSAP.to(this.mesh.material.uniforms.uDensity, {
-            value: angleDeg,
-        });
-        GSAP.to(this.mesh.material.uniforms.uStrength, {
-            value: distanceFromCenter.y,
-        });
-        // GSAP.to(this.mesh.material.uniforms.uDeepPurple, {
-        //     value: this.mouse.x,
-        // });
-        // GSAP.to(this.mesh.material.uniforms.uOpacity, { value: this.mouse.y });
-    }
+    //     GSAP.to(this.mesh.material.uniforms.uFrequency, {
+    //         value: (distanceFromCenter.y + distanceFromCenter.x) / 50,
+    //     });
+    //     GSAP.to(this.mesh.material.uniforms.uAmplitude, {
+    //         value: this.mouse.x,
+    //     });
+    //     GSAP.to(this.mesh.material.uniforms.uDensity, {
+    //         value: angleDeg,
+    //     });
+    //     GSAP.to(this.mesh.material.uniforms.uStrength, {
+    //         value: (distanceFromCenter.y + distanceFromCenter.x) / 3,
+    //     });
+    //     GSAP.to(this.mesh.material.uniforms.uDeepPurple, {
+    //         value: this.mouse.x,
+    //     });
+    //     GSAP.to(this.mesh.material.uniforms.uOpacity, { value: this.mouse.y });
+    // }
 
     randomIntFromInterval = (min, max) => {
-        // min and max included
         return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
@@ -213,24 +199,30 @@ export class ScrollStage {
      */
     update() {
         const elapsedTime = this.clock.getElapsedTime();
-
-        if (this.wave.value < 14 && this.wave.mode === 'up') {
-            this.wave.value = this.wave.value + 0.005;
-        } else if (this.wave.value > 12 && this.wave.mode === 'down') {
-            this.wave.value = this.wave.value - 0.005;
-        } else {
-            this.wave.mode = this.wave.mode === 'up' ? 'down' : 'up';
-        }
+        const morphingVariant = elapsedTime / 2;
 
         if (this.mesh) {
-            this.mesh.rotation.y = elapsedTime * 0.15;
+            this.mesh.rotation.y = elapsedTime * 0.5;
 
             GSAP.to(this.mesh.material.uniforms.uDensity, {
-                value: this.wave.value / 10,
+                value: 1.5 + Math.sin(morphingVariant),
             });
             GSAP.to(this.mesh.material.uniforms.uAmplitude, {
-                value: this.wave.value / 10,
+                value: 1.5 + Math.sin(morphingVariant),
             });
+            // GSAP.to(this.mesh.material.uniforms.uStrength, {
+            //     value: Math.sin(morphingVariant / 2),
+            // });
+
+            GSAP.to(this.secondMesh.material.uniforms.uDensity, {
+                value: 1.5 + Math.sin(morphingVariant + Math.PI / 2),
+            });
+            GSAP.to(this.secondMesh.material.uniforms.uAmplitude, {
+                value: 1.5 + Math.sin(morphingVariant + Math.PI / 2),
+            });
+            // GSAP.to(this.secondMesh.material.uniforms.uStrength, {
+            //     value: Math.sin(morphingVariant / 2 + Math.PI / 2),
+            // });
         }
 
         this.render();
@@ -285,7 +277,7 @@ export class ScrollStage {
     init() {
         this.addCanvas();
         this.addCamera();
-        // this.addEventListeners();
+        this.addEventListeners();
         this.onResize();
         this.update();
         this.addMesh();
