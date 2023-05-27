@@ -1,10 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { ScrollStage } from './ScrollStage';
 
 import './shape.scss';
 
 export const Shape = () => {
-    const scrollStage = useMemo(() => {
+    // const scrollStage = useMemo(() => {
+    //     import { ScrollStage } from './ScrollStage';
+
+    //     console.log(ScrollStage.ScrollStage);
+
+    //     return new ScrollStage();
+    // }, []);
+
+    useEffect(() => {
         return new ScrollStage();
     }, []);
 
@@ -12,7 +20,7 @@ export const Shape = () => {
         <section className="shape">
             <div className="content"></div>
             <div className="links">
-                <button
+                {/* <button
                     onClick={() => {
                         scrollStage.moveLeft();
                     }}
@@ -39,7 +47,7 @@ export const Shape = () => {
                     }}
                 >
                     zoom in
-                </button>
+                </button> */}
             </div>
         </section>
     );
