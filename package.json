@@ -9,6 +9,7 @@
     "gatsby-omni-font-loader": "^2.0.2",
     "gatsby-plugin-eslint": "^4.0.3",
     "gatsby-plugin-glslify": "^1.0.2",
+    "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-image": "^3.4.0",
     "gatsby-plugin-layout": "^4.4.0",
     "gatsby-plugin-manifest": "^5.4.0",

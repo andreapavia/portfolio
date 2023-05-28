@@ -73,8 +73,9 @@ export class ScrollStage {
     }
 
     addMesh() {
-        this.geometry = new THREE.IcosahedronGeometry(1, 32);
+        const meshScaleSize = this.calculateMeshScale();
 
+        this.geometry = new THREE.IcosahedronGeometry(1, 32);
         this.material = new THREE.ShaderMaterial({
             wireframe: true,
             blending: THREE.AdditiveBlending,
@@ -109,8 +110,8 @@ export class ScrollStage {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.secondMesh = new THREE.Mesh(this.geometry, this.secondMaterial);
 
-        this.mesh.scale.set(0.7, 0.7, 0.7);
-        this.secondMesh.scale.set(0.7, 0.7, 0.7);
+        this.mesh.scale.set(meshScaleSize, meshScaleSize, meshScaleSize);
+        this.secondMesh.scale.set(meshScaleSize, meshScaleSize, meshScaleSize);
 
         this.scene.add(this.mesh);
         this.scene.add(this.secondMesh);
@@ -138,18 +139,15 @@ export class ScrollStage {
     }
 
     onResize() {
+        const meshScaleSize = this.calculateMeshScale();
+
         this.viewport = {
             width: window.innerWidth,
             height: window.innerHeight,
         };
 
-        // if (this.mesh) {
-        //     if (this.viewport.width < this.viewport.height) {
-        //         this.mesh.scale.set(0.5, 0.5, 0.5);
-        //     } else {
-        //         this.mesh.scale.set(0.75, 0.75, 0.75);
-        //     }
-        // }
+        this.mesh.scale.set(meshScaleSize, meshScaleSize, meshScaleSize);
+        this.secondMesh.scale.set(meshScaleSize, meshScaleSize, meshScaleSize);
 
         this.camera.aspect = this.viewport.width / this.viewport.height;
         this.camera.updateProjectionMatrix();
@@ -274,12 +272,28 @@ export class ScrollStage {
         });
     };
 
+    calculateMeshScale = () => {
+        let coefficient;
+
+        if (this.viewport.width >= 1920) {
+            coefficient = 3000;
+        } else if (this.viewport.width >= 1200 && this.viewport.width < 1920) {
+            coefficient = 2500;
+        } else if (this.viewport.width >= 700 && this.viewport.width < 1200) {
+            coefficient = 2000;
+        } else if (this.viewport.width < 700) {
+            coefficient = 1500;
+        }
+
+        return this.viewport.width / coefficient;
+    };
+
     init() {
         this.addCanvas();
         this.addCamera();
         this.addEventListeners();
+        this.addMesh();
         this.onResize();
         this.update();
-        this.addMesh();
     }
 }
