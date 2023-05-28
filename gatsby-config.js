@@ -31,6 +31,14 @@ const gatsbyPluginEslint = {
     resolve: 'gatsby-plugin-eslint',
 };
 
+const gatsbyPluginGoogleFonts = {
+    resolve: `gatsby-plugin-google-fonts`,
+    options: {
+        fonts: [`Press Start 2P\:400`],
+        display: 'swap',
+    },
+};
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
@@ -43,8 +51,16 @@ module.exports = {
         'gatsby-plugin-sass',
         'gatsby-plugin-layout',
         'gatsby-plugin-page-transitions',
+        `gatsby-plugin-glslify`,
         gatsbySourceFileSystem,
         gatsbyPluginEslint,
         manifestPluginConfig,
+        gatsbyPluginGoogleFonts,
     ],
 };
+
+{
+    /* <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"></link> */
+}

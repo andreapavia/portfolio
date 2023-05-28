@@ -1,0 +1,82 @@
+@use '../../../styles/variables';
+
+canvas.webgl {
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    overflow: hidden;
+
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.shape {
+    padding: 40px 0;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+
+    h1,
+    h2,
+    h3 {
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+        font-size: 2vw;
+
+        .italic {
+            font-style: italic;
+        }
+
+        .inverted {
+            transform: rotate(180deg);
+        }
+    }
+
+    div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    @media screen and (max-width: variables.$screen-lg) {
+        h1,
+        h2,
+        h3 {
+            font-size: 4vw;
+        }
+    }
+
+    @media screen and (max-width: variables.$screen-md) {
+        h1,
+        h2,
+        h3 {
+            font-size: 40px;
+        }
+    }
+
+    @media screen and (max-width: variables.$screen-sm) {
+        // h1,
+        // h2,
+        // h3,
+        // .h3.comeback {
+        //     font-size: 7vw;
+        // }
+
+        div {
+            flex-flow: column;
+        }
+    }
+}

@@ -1,5 +1,31 @@
-@import "_reset.scss";
+@use './variables';
+@use '_reset.scss';
+
+* {
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #D72638;
+    background-color: variables.$background-1;
+    color: variables.$foreground-1;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+        /* Chrome and Safari */
+        display: none;
+    }
+}
+
+main {
+    max-width: variables.$max-content-width;
+    margin: 0 auto;
+    font-family: variables.$font-main;
+    font-size: variables.$font-size-main;
+    overflow: hidden;
+
+    @media screen and (max-width: variables.$screen-sm) {
+        max-width: 85vw;
+    }
 }

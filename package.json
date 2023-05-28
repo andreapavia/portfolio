@@ -8,6 +8,8 @@
     "gatsby": "^5.4.2",
     "gatsby-omni-font-loader": "^2.0.2",
     "gatsby-plugin-eslint": "^4.0.3",
+    "gatsby-plugin-glslify": "^1.0.2",
+    "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-image": "^3.4.0",
     "gatsby-plugin-layout": "^4.4.0",
     "gatsby-plugin-manifest": "^5.4.0",
@@ -16,10 +18,14 @@
     "gatsby-plugin-sharp": "^5.4.0",
     "gatsby-source-filesystem": "^5.4.0",
     "gatsby-transformer-sharp": "^5.4.0",
+    "glslify": "^7.1.1",
+    "gsap": "^3.11.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "sass": "^1.57.1"
+    "react-scroll-parallax": "^3.4.2",
+    "sass": "^1.57.1",
+    "three": "^0.152.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",

@@ -1,15 +1,15 @@
-import * as React from "react";
+import React from 'react';
+import { Shape } from '../components/animation/shape/Shape';
+import '../styles/global.scss';
 
-import "../styles/global.scss";
-
-const IndexPage = () => {
-  return (
-    <main>
-      <div>ciao</div>
-    </main>
-  );
+const Index = () => {
+    return (
+        <main>
+            <Shape />
+        </main>
+    );
 };
 
-export default IndexPage;
+export default Index;
 
-export const Head = () => <title>Home Page</title>;
+export const Head = () => <title>andreafrancescopavia</title>;
